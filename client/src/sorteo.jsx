@@ -7,13 +7,18 @@ const getRandomInt = (max) => {
 
 export const Sorteo = () => {
 
-    const [datoState, setDatos] = useState(``)
+    const [datoState, setDatos] = useState([])
 
-    const numeroRandom = getRandomInt(datoState.length)
+    const sortear = () => {
+        if(datoState.length < 0) return
+        const numeroRandom = getRandomInt(datoState.length)
 
-    const ganador = datoState[numeroRandom]
+        const ganador = datoState[numeroRandom]
 
-    const {dni, apellido, nombre} = ganador
+        const { apellido, nombre } = ganador
+
+        alert(`El ganador es ${apellido}, ${nombre}`)
+    }
 
     const listaParticipantes = async () => {
         try {
@@ -27,13 +32,16 @@ export const Sorteo = () => {
 
     useEffect(() => {
         listaParticipantes()
-        console.log(`el ganador es ${apellido}, ${nombre} con el dni ${dni}`)
     }, [])
 
     return (
         <>
             <h1>SORTEO ISJU</h1>
-            <Form></Form>
+            <Form fn={listaParticipantes}></Form>
+            <ul>
+                {datoState && datoState.map((elemento) => <li key={elemento.id}>{elemento.dni} {elemento.apellido} {elemento.nombre} {elemento.telefono} {elemento.email}</li>)}
+            </ul>
+            <button onClick={sortear}>Sortear</button>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import { useState } from "react"
-export const Form = () => {
+export const Form = ({fn}) => {
     const [formState, setForm] = useState({
         dni: '',
         nombre: '',
@@ -26,6 +26,7 @@ export const Form = () => {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(formState),
             });
+            await fn(true)
         }
         catch(error){
             console.log(error)
